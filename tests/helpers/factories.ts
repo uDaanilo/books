@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker"
 import { Book, BookSchema } from "../../src/models/book"
 
 const BookFactory = async (
-  bookData?: Omit<BookSchema, "sbn">,
+  bookData?: Partial<Omit<BookSchema, "sbn">>,
   quantity = 1
 ) => {
   for (let i = 0; i < quantity; i++) {

@@ -3,12 +3,35 @@ import request from "supertest"
 import { Express } from "../../src/config/express"
 import { Book, BookSchema } from "../../src/models/book"
 import { faker } from "@faker-js/faker"
+import { BookFactory } from "../helpers/factories"
 
 const app = new Express().app
 
 describe("Books", () => {
   beforeAll(async () => {
     await dbConnection.initialize()
+  })
+
+  afterEach(async () => {
+    await Book.clear()
+  })
+
+  it("GET / should list all books with pagination", async () => {
+    await BookFactory({ stock: 10 }, 11)
+
+    let page = 1
+
+    const firstReponse = await request(app).get(`/books?page=${page}`)
+
+    expect(firstReponse.statusCode).toBe(200)
+    expect(Array.isArray(firstReponse.body)).toBeTruthy()
+
+    page += 1
+    const secondReponse = await request(app).get(`/books?page=${page}`)
+
+    expect(secondReponse.statusCode).toBe(200)
+    expect(Array.isArray(secondReponse.body)).toBeTruthy()
+    expect(secondReponse.body.length).toBe(1)
   })
 
   it("POST / should create a new book", async () => {

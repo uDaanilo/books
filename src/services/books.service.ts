@@ -1,6 +1,26 @@
+import { MoreThan } from "typeorm"
 import { Book, BookSchema } from "../models/book"
 
 class BooksService {
+  async getNameOfBooksInStock(page = 1) {
+    const booksPerPage = 10
+    const skip = booksPerPage * page - booksPerPage
+
+    const books = await Book.find({
+      select: { name: true },
+      take: 10,
+      skip,
+      where: {
+        stock: MoreThan(1),
+      },
+      order: {
+        stock: "DESC",
+      },
+    })
+
+    return books
+  }
+
   async save(bookData: BookSchema) {
     const book = new Book()
 
