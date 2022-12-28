@@ -52,6 +52,13 @@ class BooksService {
 
     return book
   }
+
+  async deleteById(id: number) {
+    const bookExists = await this.getById(id)
+    if (!bookExists) throw new Error("Book not found")
+
+    await Book.delete({ id })
+  }
 }
 
 export default BooksService

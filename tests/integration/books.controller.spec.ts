@@ -109,6 +109,20 @@ describe("Books", () => {
     expect(response.statusCode).toBe(404)
   })
 
+  it("DELETE /:id should be able to delete the specified book", async () => {
+    const [book] = await BookFactory()
+
+    const response = await request(app).delete(`/books/${book.id}`)
+
+    expect(response.statusCode).toBe(204)
+  })
+
+  it("DELETE /:id should not be able to delete book that doesn't exists", async () => {
+    const response = await request(app).delete("/books/925")
+
+    expect(response.statusCode).toBe(404)
+  })
+
   afterAll(async () => {
     await dbConnection.dropDatabase()
   })

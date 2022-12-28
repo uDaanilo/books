@@ -68,6 +68,23 @@ class BooksController {
       }
     }
   }
+
+  static async delete(req: Request, res: Response) {
+    const { id } = req.params
+
+    const booksService = new BooksService()
+    try {
+      await booksService.deleteById(+id)
+
+      return res.status(204).json()
+    } catch (err: any) {
+      if (err?.message === "Book not found") {
+        return res.status(404).json({
+          error: "Book not found",
+        })
+      }
+    }
+  }
 }
 
 export { BooksController }

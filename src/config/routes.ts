@@ -49,6 +49,15 @@ booksRouter.patch(
   }),
   BooksController.update
 )
+booksRouter.delete(
+  "/:id",
+  celebrate({
+    params: Joi.object().keys({
+      id: Joi.number().required(),
+    }),
+  }),
+  BooksController.delete
+)
 
 router.use("/books", booksRouter)
 
