@@ -34,6 +34,20 @@ describe("Books", () => {
     expect(secondReponse.body.length).toBe(1)
   })
 
+  it("GET /:id should return all book properties", async () => {
+    const [book] = await BookFactory(undefined, 1)
+
+    const response = await request(app).get(`/books/${book.id}`)
+
+    expect(response.statusCode).toBe(200)
+    expect(response.body.id).toBe(book.id)
+    expect(response.body.name).toBe(book.name)
+    expect(response.body.author).toBe(book.author)
+    expect(response.body.description).toBe(book.description)
+    expect(response.body.sbn).toBe(book.sbn)
+    expect(response.body.stock).toBe(book.stock)
+  })
+
   it("POST / should create a new book", async () => {
     const mockBook: BookSchema = {
       name: faker.name.jobTitle(),

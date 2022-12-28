@@ -15,6 +15,15 @@ booksRouter.get(
   }),
   BooksController.index
 )
+booksRouter.get(
+  "/:id",
+  celebrate({
+    params: Joi.object().keys({
+      id: Joi.number().required(),
+    }),
+  }),
+  BooksController.getById
+)
 booksRouter.post(
   "/",
   celebrate({

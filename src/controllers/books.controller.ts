@@ -2,6 +2,15 @@ import { Request, Response } from "express"
 import BooksService from "../services/books.service"
 
 class BooksController {
+  static async getById(req: Request, res: Response) {
+    const { id } = req.params
+
+    const booksService = new BooksService()
+    const book = await booksService.getById(+id)
+
+    return res.json(book)
+  }
+
   static async index(req: Request, res: Response) {
     const { page = 1 } = req.query
 

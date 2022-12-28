@@ -5,6 +5,8 @@ const BookFactory = async (
   bookData?: Partial<Omit<BookSchema, "sbn">>,
   quantity = 1
 ) => {
+  const books: Book[] = []
+
   for (let i = 0; i < quantity; i++) {
     const book = new Book()
     const rng = Math.floor(Math.random() * 100)
@@ -15,7 +17,11 @@ const BookFactory = async (
     book.stock = bookData?.stock || rng
 
     await book.save()
+
+    books.push(book)
   }
+
+  return books
 }
 
 export { BookFactory }

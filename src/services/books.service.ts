@@ -21,6 +21,10 @@ class BooksService {
     return books
   }
 
+  async getById(id: number) {
+    return Book.findOneBy({ id })
+  }
+
   async save(bookData: BookSchema) {
     const book = new Book()
 
