@@ -37,6 +37,18 @@ booksRouter.post(
   }),
   BooksController.create
 )
+booksRouter.patch(
+  "/:id",
+  celebrate({
+    body: Joi.object<BookSchema>().keys({
+      name: Joi.string(),
+      description: Joi.string(),
+      author: Joi.string(),
+      stock: Joi.number(),
+    }),
+  }),
+  BooksController.update
+)
 
 router.use("/books", booksRouter)
 

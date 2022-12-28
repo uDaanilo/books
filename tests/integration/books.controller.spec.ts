@@ -78,6 +78,37 @@ describe("Books", () => {
     expect(response.statusCode).toBe(400)
   })
 
+  it("PATCH / should be able to update a book", async () => {
+    const [book] = await BookFactory(undefined, 1)
+    const newName = "Updated"
+
+    const response = await request(app).patch(`/books/${book.id}`).send({
+      name: newName,
+    })
+
+    expect(response.statusCode).toBe(200)
+    expect(response.body.name).toBe(newName)
+  })
+
+  it("PATCH / should not be able to update a book with invalid properties", async () => {
+    const [book] = await BookFactory(undefined, 1)
+    const newName = 2
+
+    const response = await request(app).patch(`/books/${book.id}`).send({
+      name: newName,
+    })
+
+    expect(response.statusCode).toBe(400)
+  })
+
+  it("PATCH / should not be able to update a book with invalid id", async () => {
+    const response = await request(app).patch("/books/971").send({
+      name: "Updated",
+    })
+
+    expect(response.statusCode).toBe(404)
+  })
+
   afterAll(async () => {
     await dbConnection.dropDatabase()
   })

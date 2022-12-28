@@ -38,6 +38,20 @@ class BooksService {
 
     return book
   }
+
+  async update(id: number, bookData: Partial<BookSchema>) {
+    const book = await this.getById(id)
+
+    if (!book) throw new Error("Book not found")
+
+    Object.entries(bookData).forEach(([k, v]) => {
+      ;(book as { [k: string]: any })[k] = v
+    })
+
+    await book.save()
+
+    return book
+  }
 }
 
 export default BooksService

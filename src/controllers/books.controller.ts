@@ -37,6 +37,37 @@ class BooksController {
       name: book.name,
     })
   }
+
+  static async update(req: Request, res: Response) {
+    const { id } = req.params
+    const { name, description, author, sbn, stock } = req.body
+
+    const booksService = new BooksService()
+    try {
+      const book = await booksService.update(+id, {
+        name,
+        description,
+        author,
+        sbn,
+        stock,
+      })
+
+      return res.json({
+        id: book.id,
+        name: book.name,
+        description: book.description,
+        author: book.author,
+        sbn: book.sbn,
+        stock: book.stock,
+      })
+    } catch (err: any) {
+      if (err?.message === "Book not found") {
+        return res.status(404).json({
+          error: "Book not found",
+        })
+      }
+    }
+  }
 }
 
 export { BooksController }
