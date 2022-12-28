@@ -1,12 +1,21 @@
+import "dotenv/config"
+import "reflect-metadata"
 import { DataSource } from "typeorm"
-import path from "path"
 import { Book } from "../models/book"
+
+const shouldSync =
+  process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test"
+
+const database =
+  process.env.NODE_ENV === "test"
+    ? "book_application_test.sqlite"
+    : "books_application.sqlite"
 
 const dbConnection = new DataSource({
   type: "sqlite",
-  database: path.resolve(__dirname, "..", "db", "books_application.sqlite"),
+  database: `./src/db/${database}`,
   entities: [Book],
-  synchronize: process.env.NODE_ENV === "development",
+  synchronize: shouldSync,
 })
 
 export { dbConnection }
