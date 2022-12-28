@@ -1,11 +1,12 @@
 import "dotenv/config"
-import express from "express"
+import { Express } from "./config/express"
 
-const app = express()
+function bootstrap() {
+  const PORT = process.env.PORT || 3000
 
-app.get("/", (req, res) => {
-  res.send("Hello world")
-})
+  new Express().listen(3000, () =>
+    console.info(`Application running on ${PORT}`)
+  )
+}
 
-const PORT = process.env.PORT || 3000
-app.listen(PORT, () => console.info(`Application running on ${PORT}`))
+bootstrap()
