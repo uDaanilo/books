@@ -50,6 +50,20 @@ describe("Books", () => {
     expect(response.body.name).toBeDefined()
   })
 
+  it("POST / should not create a new book with invalid properties", async () => {
+    const mockBook = {
+      name: 1,
+      description: faker.lorem.paragraph(),
+      author: faker.name.fullName(),
+      sbn: Book.generateSbn(),
+      stock: "lorem ipsum",
+    }
+
+    const response = await request(app).post("/books").send(mockBook)
+
+    expect(response.statusCode).toBe(400)
+  })
+
   afterAll(async () => {
     await dbConnection.dropDatabase()
   })

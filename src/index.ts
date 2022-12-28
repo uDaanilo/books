@@ -8,7 +8,7 @@ async function bootstrap() {
 
   await dbConnection.initialize()
 
-  new Express().listen(3000, () =>
+  new Express().app.listen(3000, () =>
     console.info(`Application running on ${PORT}`)
   )
 }

@@ -1,4 +1,5 @@
-import express, { Application } from "express"
+import { errors } from "celebrate"
+import express from "express"
 import routes from "./routes"
 
 class Express {
@@ -7,6 +8,7 @@ class Express {
   constructor() {
     this.setConfig()
     this.setRoutes()
+    this.errorHandlers()
   }
 
   private setConfig() {
@@ -20,8 +22,8 @@ class Express {
     this.app.use(routes)
   }
 
-  public listen(...args: Parameters<Application["listen"]>) {
-    this.app.listen(...args)
+  private errorHandlers() {
+    this.app.use(errors({ statusCode: 400 }))
   }
 }
 
