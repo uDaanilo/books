@@ -78,7 +78,7 @@ describe("Books", () => {
     expect(response.statusCode).toBe(400)
   })
 
-  it("PATCH / should be able to update a book", async () => {
+  it("PATCH /:id should be able to update a book", async () => {
     const [book] = await BookFactory(undefined, 1)
     const newName = "Updated"
 
@@ -90,7 +90,7 @@ describe("Books", () => {
     expect(response.body.name).toBe(newName)
   })
 
-  it("PATCH / should not be able to update a book with invalid properties", async () => {
+  it("PATCH /:id should not be able to update a book with invalid properties", async () => {
     const [book] = await BookFactory(undefined, 1)
     const newName = 2
 
@@ -101,7 +101,7 @@ describe("Books", () => {
     expect(response.statusCode).toBe(400)
   })
 
-  it("PATCH / should not be able to update a book with invalid id", async () => {
+  it("PATCH /:id should not be able to update a book with invalid id", async () => {
     const response = await request(app).patch("/books/971").send({
       name: "Updated",
     })
