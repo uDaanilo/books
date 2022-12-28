@@ -43,4 +43,9 @@ class Book extends BaseEntity {
   }
 }
 
-export { Book }
+type BookSchema = Pick<
+  Book,
+  "name" | "description" | "author" | "sbn" | "stock"
+>
+
+export { Book, BookSchema }

@@ -1,7 +1,8 @@
 import express, { Application } from "express"
+import routes from "./routes"
 
 class Express {
-  private app = express()
+  public app = express()
 
   constructor() {
     this.setConfig()
@@ -16,6 +17,7 @@ class Express {
     this.app.all("/", (req, res) => {
       res.send("Hello world")
     })
+    this.app.use(routes)
   }
 
   public listen(...args: Parameters<Application["listen"]>) {
