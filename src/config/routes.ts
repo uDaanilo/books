@@ -37,7 +37,7 @@ booksRouter.post(
 
         return val
       }).required(),
-      stock: Joi.number().required(),
+      stock: Joi.number().min(1).required(),
     }),
   }),
   BooksController.create

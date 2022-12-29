@@ -92,6 +92,20 @@ describe("Books", () => {
     expect(response.statusCode).toBe(400)
   })
 
+  it("POST / should not create a new book with negative stock", async () => {
+    const mockBook = {
+      name: "test",
+      description: faker.lorem.paragraph(),
+      author: faker.name.fullName(),
+      sbn: Book.generateSbn(),
+      stock: -2,
+    }
+
+    const response = await request(app).post("/books").send(mockBook)
+
+    expect(response.statusCode).toBe(400)
+  })
+
   it("PATCH /:id should be able to update a book", async () => {
     const [book] = await BookFactory(undefined, 1)
     const newName = "Updated"
