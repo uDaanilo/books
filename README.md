@@ -46,6 +46,7 @@ Uma aplicação rest que simula uma livraria online
    ```
    também é possivel iniciar utilizando docker
    ```sh
+   chmod +x ./entrypoint.sh
    docker compose up
    ```
 

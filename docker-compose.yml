@@ -3,6 +3,7 @@ version: "3"
 services:
   app:
     build: .
+    entrypoint: /app/entrypoint.sh
     command: yarn dev
     ports:
       - 3000:3000
