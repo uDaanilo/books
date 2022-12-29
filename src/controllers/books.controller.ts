@@ -8,6 +8,12 @@ class BooksController {
     const booksService = new BooksService()
     const book = await booksService.getById(+id)
 
+    if (!book) {
+      return res.status(404).json({
+        error: "Book not found",
+      })
+    }
+
     return res.json(book)
   }
 
