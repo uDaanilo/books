@@ -4,3 +4,4 @@ dist
 .env
 src/db/*
 !src/db/.gitkeep
+!src/db/books_application.sqlite
