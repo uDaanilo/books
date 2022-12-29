@@ -32,8 +32,7 @@ booksRouter.post(
       description: Joi.string().required(),
       author: Joi.string().required(),
       sbn: Joi.custom((val, helpers) => {
-        if (!Book.isValidSbn(val))
-          return helpers.message({ error: "Invalid sbn" })
+        if (!Book.isValidSbn(val)) return helpers.error("any.invalid")
 
         return val
       }).required(),
