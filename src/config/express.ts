@@ -1,6 +1,8 @@
 import { errors } from "celebrate"
 import express from "express"
 import routes from "./routes"
+import swaggerUi from "swagger-ui-express"
+import docs from "../../swagger.json"
 
 class Express {
   public app = express()
@@ -13,6 +15,7 @@ class Express {
 
   private setConfig() {
     this.app.use(express.json())
+    this.app.use("/docs", swaggerUi.serve, swaggerUi.setup(docs))
   }
 
   private setRoutes() {

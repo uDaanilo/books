@@ -1,0 +1,234 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Books api",
+    "description": "Aplicação livraria online",
+    "version": "1.0.0"
+  },
+  "servers": [{ "url": "http://localhost:3000", "description": "localhost" }],
+  "paths": {
+    "/books": {
+      "get": {
+        "summary": "Listagem de livros em estoque",
+        "description": "Lista o nome dos livros em estoque ordenado por quantia em estoque",
+        "tags": ["Books"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Página",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastro de livro",
+        "description": "",
+        "tags": ["Books"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Book"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid body"
+          },
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books/{id}": {
+      "get": {
+        "summary": "Listagem detalhada de um livro",
+        "tags": ["Books"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do livro",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookWithId"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Atualização de livro",
+        "description": "Rota responsável por atualizar as propriedades de um livro",
+        "tags": ["Books"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do livro",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "author": {
+                    "type": "string"
+                  },
+
+                  "stock": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid body"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookWithId"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Exclusão de livro",
+        "description": "Rota responsável por excluir um livro",
+        "tags": ["Books"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do livro",
+            "required": true
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not found"
+          },
+          "204": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Book": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "sbn": {
+            "type": "string",
+            "pattern": "[0-9]{2}-[0-9]{3}-[0-9]{4}-[0-9]{1}"
+          },
+          "stock": {
+            "type": "number"
+          }
+        }
+      },
+      "BookWithId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "sbn": {
+            "type": "string",
+            "pattern": "[0-9]{2}-[0-9]{3}-[0-9]{4}-[0-9]{1}"
+          },
+          "stock": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}
