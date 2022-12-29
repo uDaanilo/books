@@ -31,9 +31,15 @@ class Book extends BaseEntity {
 
   @BeforeInsert()
   private setRandomSbn() {
-    if (this.sbn) return
+    if (!this.sbn) {
+      this.sbn = Book.generateSbn()
+      return
+    }
+    if (!Book.isValidSbn(this.sbn)) throw new Error("Invalid sbn")
+  }
 
-    this.sbn = Book.generateSbn()
+  static isValidSbn(sbn: string) {
+    return Book.sbnPattern.test(sbn)
   }
 
   static generateSbn() {

@@ -1,7 +1,7 @@
 import { celebrate, Joi } from "celebrate"
 import { Router } from "express"
 import { BooksController } from "../controllers/books.controller"
-import { BookSchema } from "../models/book"
+import { Book, BookSchema } from "../models/book"
 
 const router = Router()
 const booksRouter = Router()
@@ -31,7 +31,12 @@ booksRouter.post(
       name: Joi.string().required(),
       description: Joi.string().required(),
       author: Joi.string().required(),
-      sbn: Joi.string().required(),
+      sbn: Joi.custom((val, helpers) => {
+        if (!Book.isValidSbn(val))
+          return helpers.message({ error: "Invalid sbn" })
+
+        return val
+      }).required(),
       stock: Joi.number().required(),
     }),
   }),
