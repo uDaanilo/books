@@ -1,5 +1,5 @@
 import { errors } from "celebrate"
-import express from "express"
+import express, { NextFunction, Request, Response } from "express"
 import routes from "./routes"
 import swaggerUi from "swagger-ui-express"
 import docs from "../../swagger.json"
@@ -27,6 +27,13 @@ class Express {
 
   private errorHandlers() {
     this.app.use(errors({ statusCode: 400 }))
+    this.app.use(
+      (err: unknown, req: Request, res: Response, next: NextFunction) => {
+        if (err) console.error(err)
+
+        res.sendStatus(500)
+      }
+    )
   }
 }
 
